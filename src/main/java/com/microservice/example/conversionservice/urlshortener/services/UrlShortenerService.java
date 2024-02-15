@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 public interface UrlShortenerService {
     public ShortUrl generateShortUrl(UrlDto urlDto);
     public ShortUrl persistShortUrl(ShortUrl shortUrl);
-    public String encodeUrl(String longUrl);
+
+    private String encodeUrl(String longUrl) {
+        return null;
+    }
+
     public void deleteGeneratedShortLink(ShortUrl shortUrl);
-    public ShortUrl getEncodeUrl(ShortUrl shortUrl);
+    public ShortUrl getEncodeUrl(String longUrl);
 }
