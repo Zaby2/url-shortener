@@ -6,11 +6,13 @@ import com.microservice.example.conversionservice.urlshortener.dtoObjects.ShortU
 import com.microservice.example.conversionservice.urlshortener.dtoObjects.UrlDto;
 import com.microservice.example.conversionservice.urlshortener.repositories.UrlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service // is it better to put component here???
 public class UrlServiceImpl implements UrlShortenerService {
@@ -63,7 +65,19 @@ public class UrlServiceImpl implements UrlShortenerService {
     // actually this need to be scheduled???
     @Override
     public void deleteGeneratedShortLink(ShortUrl shortUrl) {
-        //later
+       urlRepository.delete(shortUrl);
+    }
+
+
+    // If this method need to be async???
+    @Scheduled(cron = "@hourly")
+    public void deleteExpiredGeneratedShortLink() {
+        List<ShortUrl> shortUrlList = urlRepository.findAll();
+        for (ShortUrl shortUrl : shortUrlList) {
+            if(shortUrl.getExpirationTime().isBefore(LocalDateTime.now())) {
+                urlRepository.delete(shortUrl);
+            }
+        }
     }
 
     @Override
