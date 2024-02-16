@@ -8,7 +8,6 @@ import com.microservice.example.conversionservice.urlshortener.repositories.UrlR
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -72,7 +71,7 @@ public class UrlServiceImpl implements UrlShortenerService {
     // If this method need to be async???
     @Scheduled(cron = "@hourly")
     public void deleteExpiredGeneratedShortLink() {
-        List<ShortUrl> shortUrlList = urlRepository.findAll();
+        Iterable<ShortUrl> shortUrlList = urlRepository.findAll();
         for (ShortUrl shortUrl : shortUrlList) {
             if(shortUrl.getExpirationTime().isBefore(LocalDateTime.now())) {
                 urlRepository.delete(shortUrl);

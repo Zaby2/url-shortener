@@ -2,16 +2,14 @@ package com.microservice.example.conversionservice.urlshortener.dtoObjects;
 
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 import lombok.*;
 
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name  = "shorturls")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,16 +18,15 @@ public class ShortUrl {
     @Id
     @GeneratedValue
     private long id;
-    @Lob
     private String longUrl;
-    private String ShortUrl;
+    private String shortUrl;
     private LocalDateTime creationTime;
     private LocalDateTime expirationTime;
     public ShortUrl(long id, String longUrl, String shortUrl, LocalDateTime creationTime, LocalDateTime expirationTime) {
         super();
         this.id = id;
         this.longUrl = longUrl;
-        ShortUrl = shortUrl;
+        this.shortUrl = shortUrl;
         this.creationTime = creationTime;
         this.expirationTime = expirationTime;
     }
