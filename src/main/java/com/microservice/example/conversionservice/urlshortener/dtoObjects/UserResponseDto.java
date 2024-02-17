@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 public class UserResponseDto {
     private String longUrl;
     private String shortUrl;
-
+    private LocalDateTime expirationDate;
     public UserResponseDto(String longUrl, String shortUrl, LocalDateTime expirationDate) {
         this.longUrl = longUrl;
         this.shortUrl = shortUrl;
         this.expirationDate = expirationDate;
     }
 
-    private LocalDateTime expirationDate;
+
 }
