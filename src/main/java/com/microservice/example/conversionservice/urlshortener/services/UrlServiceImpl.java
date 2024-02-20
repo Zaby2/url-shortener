@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Service // is it better to put component here???
+@Service
 public class UrlServiceImpl implements UrlShortenerService {
 
     @Autowired
