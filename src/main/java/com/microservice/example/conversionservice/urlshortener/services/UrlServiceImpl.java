@@ -26,11 +26,11 @@ public class UrlServiceImpl implements UrlShortenerService {
             shortUrl.setLongUrl(urlDto.getLongUrl());
             shortUrl.setCreationTime(LocalDateTime.now());
             shortUrl.setShortUrl(encodedUrl);
-            shortUrl.setExpirationTime(getTheExpirationTime(urlDto.getExpirationDate(), shortUrl.getExpirationTime()));
+            shortUrl.setExpirationTime(getTheExpirationTime(urlDto.getExpirationDate(), shortUrl.getCreationTime()));
             ShortUrl shortUrlToRet = persistShortUrl(shortUrl); // need to refactor
             return shortUrlToRet; // can it be null??
         }
-        return null; // error handler class better to add
+        return null;
     }
 
 
@@ -43,7 +43,7 @@ public class UrlServiceImpl implements UrlShortenerService {
 
     // here we get expiration date;
     private LocalDateTime getTheExpirationTime(String expirationTimeDto, LocalDateTime entityCreationTime) {
-        if(expirationTimeDto.isBlank()) {
+        if(expirationTimeDto == null) {
             return entityCreationTime.plusSeconds(120);
         }
         LocalDateTime localDateTime = LocalDateTime.parse(expirationTimeDto);
@@ -68,7 +68,6 @@ public class UrlServiceImpl implements UrlShortenerService {
     }
 
 
-    // If this method need to be async???
     @Scheduled(cron = "@hourly")
     public void deleteExpiredGeneratedShortLink() {
         Iterable<ShortUrl> shortUrlList = urlRepository.findAll();
