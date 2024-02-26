@@ -2,16 +2,20 @@ package com.microservice.example.conversionservice.urlshortener.services;
 
 
 import com.google.common.hash.Hashing;
+import com.microservice.example.conversionservice.urlshortener.UrlShortenerApplication;
 import com.microservice.example.conversionservice.urlshortener.dtoObjects.ShortUrl;
 import com.microservice.example.conversionservice.urlshortener.dtoObjects.UrlDto;
 import com.microservice.example.conversionservice.urlshortener.repositories.UrlRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-
+import java.util.logging.Logger;
 
 
 // where we need to add @Cacheable???
@@ -22,6 +26,7 @@ public class UrlServiceImpl implements UrlShortenerService {
     private UrlRepository urlRepository;
     @Override
     public ShortUrl generateShortUrl(UrlDto urlDto) {
+
         if(!(urlDto.getLongUrl()).isEmpty()) { // deprecated
             String encodedUrl = encodeUrl(urlDto.getLongUrl());
             ShortUrl shortUrl = new ShortUrl();
@@ -71,6 +76,7 @@ public class UrlServiceImpl implements UrlShortenerService {
 
 
     @Scheduled(cron = "@hourly")
+    @CacheEvict("shortUrl")
     public void deleteExpiredGeneratedShortLink() {
         Iterable<ShortUrl> shortUrlList = urlRepository.findAll();
         for (ShortUrl shortUrl : shortUrlList) {
@@ -81,7 +87,10 @@ public class UrlServiceImpl implements UrlShortenerService {
     }
 
     @Override
+    @Cacheable("shortUrl")
     public ShortUrl getEncodeUrl(String shortUrl) {
+        final Logger log = (Logger) LoggerFactory.getLogger(UrlShortenerApplication.class);
+        log.info("i");
         ShortUrl shortUrlToRet = urlRepository.findByShortUrl(shortUrl);
         return shortUrlToRet;
     }

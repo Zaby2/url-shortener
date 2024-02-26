@@ -44,4 +44,15 @@ class UrlShortenerApplicationTests {
 		assertNotNull(responseEntity);
 	}
 
+
+
+	@Test
+	@DisplayName("Cache - работает исправно")
+	void cacheTest() {
+		var urls = List.of(new ShortUrl(1000, "https://www.youtube.com/watch?v=CihfMVePlcQ&t=1732s","49e7f825", null , null));
+		doReturn(urls.get(0)).when(this.mockedUrlService).getEncodeUrl("49e7f825");
+
+		mockedUrlService.getEncodeUrl("49e7f825");
+	}
+
 }
