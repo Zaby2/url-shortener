@@ -26,7 +26,7 @@
 - **GET** `/api/v1/{shortUrl}`: Redirects to the original URL associated with the short URL.
 
 ## To-Do List:
-1. Integrate Redis for load balancing.
+
 2. Implement Docker.
 3. Complete test coverage.
 4. Perform load testing.
