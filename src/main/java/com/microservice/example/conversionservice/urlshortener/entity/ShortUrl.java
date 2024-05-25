@@ -1,4 +1,4 @@
-package com.microservice.example.conversionservice.urlshortener.dtoObjects;
+package com.microservice.example.conversionservice.urlshortener.entity;
 
 
 

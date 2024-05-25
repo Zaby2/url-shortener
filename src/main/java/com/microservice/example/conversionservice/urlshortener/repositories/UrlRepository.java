@@ -1,7 +1,6 @@
 package com.microservice.example.conversionservice.urlshortener.repositories;
 
-import com.microservice.example.conversionservice.urlshortener.dtoObjects.ShortUrl;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.microservice.example.conversionservice.urlshortener.entity.ShortUrl;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -3,7 +3,7 @@ package com.microservice.example.conversionservice.urlshortener.services;
 
 import com.google.common.hash.Hashing;
 import com.microservice.example.conversionservice.urlshortener.UrlShortenerApplication;
-import com.microservice.example.conversionservice.urlshortener.dtoObjects.ShortUrl;
+import com.microservice.example.conversionservice.urlshortener.entity.ShortUrl;
 import com.microservice.example.conversionservice.urlshortener.dtoObjects.UrlDto;
 import com.microservice.example.conversionservice.urlshortener.repositories.UrlRepository;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class UrlServiceImpl implements UrlShortenerService {
     @Override
     public ShortUrl generateShortUrl(UrlDto urlDto) {
 
-        if(!(urlDto.getLongUrl()).isEmpty()) { // deprecated
+        if((urlDto.getLongUrl()) != null) {
             String encodedUrl = encodeUrl(urlDto.getLongUrl());
             ShortUrl shortUrl = new ShortUrl();
             shortUrl.setLongUrl(urlDto.getLongUrl());
@@ -35,7 +35,7 @@ public class UrlServiceImpl implements UrlShortenerService {
             shortUrl.setShortUrl(encodedUrl);
             shortUrl.setExpirationTime(getTheExpirationTime(urlDto.getExpirationDate(), shortUrl.getCreationTime()));
             ShortUrl shortUrlToRet = persistShortUrl(shortUrl); // need to refactor
-            return shortUrlToRet; // can it be null??
+            return shortUrl; // can it be null??
         }
         return null;
     }
@@ -57,7 +57,7 @@ public class UrlServiceImpl implements UrlShortenerService {
         return localDateTime;
     }
 
-    // here we will generate the short link
+
     private String encodeUrl(String longUrl) {
         String encodeUrl = "";
         LocalDateTime time = LocalDateTime.now();

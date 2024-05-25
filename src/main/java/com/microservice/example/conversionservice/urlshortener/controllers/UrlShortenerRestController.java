@@ -1,7 +1,7 @@
 package com.microservice.example.conversionservice.urlshortener.controllers;
 
 import com.microservice.example.conversionservice.urlshortener.dtoObjects.ErrorResponseDto;
-import com.microservice.example.conversionservice.urlshortener.dtoObjects.ShortUrl;
+import com.microservice.example.conversionservice.urlshortener.entity.ShortUrl;
 import com.microservice.example.conversionservice.urlshortener.dtoObjects.UrlDto;
 import com.microservice.example.conversionservice.urlshortener.dtoObjects.UserResponseDto;
 import com.microservice.example.conversionservice.urlshortener.services.UrlServiceImpl;
@@ -23,7 +23,7 @@ public class UrlShortenerRestController {
     UrlServiceImpl urlService;
 
     @Autowired
-    ErrorResponseDto errorResponseDto; // idk why I decided to make it like this
+    ErrorResponseDto errorResponseDto;
 
     @PostMapping("/short-url")
     public ResponseEntity<?> getUrl(@RequestBody UrlDto urlDto) {

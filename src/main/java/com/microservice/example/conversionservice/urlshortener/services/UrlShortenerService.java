@@ -1,8 +1,7 @@
 package com.microservice.example.conversionservice.urlshortener.services;
 
 import com.microservice.example.conversionservice.urlshortener.dtoObjects.UrlDto;
-import com.microservice.example.conversionservice.urlshortener.dtoObjects.ShortUrl;
-import org.springframework.stereotype.Service;
+import com.microservice.example.conversionservice.urlshortener.entity.ShortUrl;
 
 
 public interface UrlShortenerService {
