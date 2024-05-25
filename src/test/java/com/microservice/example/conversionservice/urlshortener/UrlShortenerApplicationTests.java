@@ -88,7 +88,7 @@ class UrlShortenerApplicationTests {
 		assertNotNull(result, "In this case shouldn't be null");
 		assertEquals(shortUrl1.getLongUrl(), result.getLongUrl());
 		//verify(urlRepository).save(shortUrl1); need to be mocks
-		//verify(urlRepository).save(shortUrl2); 
+		//verify(urlRepository).save(shortUrl2);
 	}
 
 

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @ToString
+@Builder
 public class ShortUrl {
     @Id
     @GeneratedValue
